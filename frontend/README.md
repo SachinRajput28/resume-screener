@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# 🎯 AI Resume Screener
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An AI-powered Resume Screener that helps HR users upload multiple resumes, define a Job Description, and automatically rank candidates by how well their resume matches the JD.
 
-## Available Scripts
+## 🛠 Tech Stack
+- **Backend:** Python + FastAPI
+- **ML/NLP:** scikit-learn (TF-IDF), Sentence-Transformers (SBERT)
+- **PDF Parsing:** PyMuPDF (fitz)
+- **Database:** MySQL
+- **Frontend:** React.js
 
-In the project directory, you can run:
+## ⚙️ How to Run Locally
 
-### `npm start`
+### Backend
+```bash
+cd backend
+pip install fastapi uvicorn pymupdf scikit-learn sentence-transformers spacy mysql-connector-python python-multipart pydantic
+python -m spacy download en_core_web_sm
+python -m uvicorn main:app --reload
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+```bash
+cd frontend
+npm install
+npm start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Database
+Run this in MySQL:
+```sql
+CREATE DATABASE resume_screener;
+USE resume_screener;
+CREATE TABLE candidates (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255), email VARCHAR(255),
+  skills TEXT, education TEXT, experience TEXT,
+  raw_text LONGTEXT, match_score FLOAT, label VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-### `npm test`
+## 🤖 ML Approach
+- **Scoring:** TF-IDF (40%) + SBERT (60%) weighted cosine similarity
+- **Classifier:** Logistic Regression trained on 30 samples
+- **Features:** match_score, years_of_experience, skill_count
+- **Labels:** Shortlist / Maybe / Reject
+- **Accuracy:** 100% on training data
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📊 Confusion Matrix
+```
+[[10  0  0]
+ [ 0 10  0]
+ [ 0  0 10]]
+```
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
