@@ -138,12 +138,11 @@ resume-screener/
 
 ---
 
-## 🎥 Video Demo
-[Add your Loom/Google Drive video link here]
+
 
 ---
 
 ## 👨‍💻 Author
 **Sachin Rajput**
 - GitHub: [@SachinRajput28](https://github.com/SachinRajput28)
-- Email: work.sachinrajput28@gmail.com
+
